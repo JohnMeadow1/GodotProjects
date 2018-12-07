@@ -1,0 +1,150 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://tilemap/dungeon_tilemap.tres" type="TileSet" id=1]
+[ext_resource path="res://player.gd" type="Script" id=2]
+[ext_resource path="res://sprites/0x72_16x16DungeonTileset.v4.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=1]
+
+resource_name = "walk"
+length = 0.4
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 2 ), Vector2( 0, -2 ), Vector2( 0, 2 ) ]
+}
+
+[sub_resource type="CapsuleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 2.0
+height = 7.0
+
+[node name="Node2D" type="Node2D" index="0"]
+
+scale = Vector2( 4, 4 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="TileMap_bg" type="TileMap" parent="." index="0"]
+
+mode = 0
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray( 0, 24, 0, 1, 24, 0, 2, 24, 0, 3, 24, 0, 4, 24, 0, 5, 24, 0, 6, 24, 0, 7, 24, 0, 8, 24, 0, 9, 24, 0, 10, 24, 0, 11, 24, 0, 12, 24, 0, 13, 24, 0, 14, 24, 0, 15, 24, 0, 16, 24, 0, 17, 24, 0, 65536, 24, 0, 65537, 24, 0, 65538, 24, 0, 65539, 24, 0, 65540, 24, 0, 65541, 24, 0, 65542, 24, 0, 65543, 24, 0, 65544, 24, 0, 65545, 24, 0, 65546, 24, 0, 65547, 24, 0, 65548, 24, 0, 65549, 24, 0, 65550, 24, 0, 65551, 24, 0, 65552, 24, 0, 65553, 24, 0, 196597, 24, 0, 131072, 24, 0, 131073, 24, 0, 131074, 24, 0, 131075, 24, 0, 131076, 24, 0, 131077, 24, 0, 131078, 24, 0, 131079, 24, 0, 131080, 24, 0, 131081, 24, 0, 131082, 24, 0, 131083, 24, 0, 131084, 24, 0, 131085, 24, 0, 131086, 24, 0, 131087, 24, 0, 131088, 24, 0, 131089, 24, 0, 196608, 24, 0, 196609, 24, 0, 196610, 24, 0, 196611, 24, 0, 196612, 24, 0, 196613, 9, 0, 196614, 12, 0, 196615, 24, 0, 196616, 24, 0, 196617, 24, 0, 196618, 24, 0, 196619, 24, 0, 196620, 24, 0, 196621, 24, 0, 196622, 24, 0, 196623, 24, 0, 196624, 24, 0, 196625, 24, 0, 327672, 24, 0, 327678, 24, 0, 262144, 24, 0, 262145, 24, 0, 262146, 24, 0, 262147, 24, 0, 262148, 24, 0, 262149, 13, 0, 262150, 16, 0, 262151, 24, 0, 262152, 24, 0, 262153, 24, 0, 262154, 24, 0, 262155, 24, 0, 262156, 24, 0, 262157, 24, 0, 262158, 24, 0, 262159, 24, 0, 262160, 24, 0, 262161, 24, 0, 393211, 24, 0, 393212, 24, 0, 393214, 24, 0, 327680, 24, 0, 327681, 24, 0, 327682, 24, 0, 327683, 24, 0, 327684, 24, 0, 327685, 17, 0, 327686, 20, 0, 327687, 24, 0, 327688, 24, 0, 327689, 24, 0, 327690, 24, 0, 327691, 24, 0, 327692, 24, 0, 327693, 24, 0, 327694, 24, 0, 327695, 24, 0, 327696, 24, 0, 327697, 24, 0, 458748, 24, 0, 458749, 24, 0, 393216, 24, 0, 393217, 24, 0, 393218, 24, 0, 393219, 24, 0, 393220, 24, 0, 393221, 24, 0, 393222, 24, 0, 393223, 24, 0, 393224, 24, 0, 393225, 24, 0, 393226, 24, 0, 393227, 24, 0, 393228, 24, 0, 393229, 24, 0, 393230, 24, 0, 393231, 24, 0, 393232, 24, 0, 393233, 24, 0, 524284, 24, 0, 524285, 24, 0, 458752, 24, 0, 458753, 24, 0, 458754, 24, 0, 458755, 24, 0, 458756, 24, 0, 458757, 24, 0, 458758, 24, 0, 458759, 24, 0, 458760, 3, 0, 458761, 3, 0, 458762, 24, 0, 458763, 24, 0, 458764, 24, 0, 458765, 24, 0, 458766, 24, 0, 458767, 24, 0, 458768, 24, 0, 458769, 24, 0, 524288, 24, 0, 524289, 24, 0, 524290, 24, 0, 524291, 24, 0, 524292, 24, 0, 524293, 24, 0, 524294, 24, 0, 524295, 3, 0, 524296, 3, 0, 524297, 24, 0, 524298, 24, 0, 524299, 24, 0, 524300, 24, 0, 524301, 24, 0, 524302, 24, 0, 524303, 24, 0, 524304, 24, 0, 524305, 24, 0, 655353, 24, 0, 589824, 24, 0, 589825, 24, 0, 589826, 24, 0, 589827, 24, 0, 589828, 24, 0, 589829, 24, 0, 589830, 24, 0, 589831, 24, 0, 589832, 24, 0, 589833, 24, 0, 589834, 24, 0, 589835, 24, 0, 589836, 24, 0, 589837, 24, 0, 589838, 24, 0, 589839, 24, 0, 589840, 24, 0, 589841, 24, 0, 720887, 24, 0, 720888, 24, 0, 655360, 24, 0, 655361, 24, 0, 655362, 24, 0, 655363, 24, 0, 655364, 24, 0, 655365, 24, 0, 655366, 24, 0, 655367, 24, 0, 655368, 24, 0, 655369, 24, 0, 655370, 24, 0, 655371, 24, 0, 655372, 24, 0, 655373, 24, 0, 655374, 24, 0, 655375, 24, 0, 655376, 24, 0, 655377, 24, 0, 786422, 24, 0, 851957, 24, 0, 851958, 24, 0, 851959, 24, 0, 851960, 24, 0, 851961, 24, 0, 851962, 24, 0, 851963, 24, 0 )
+_sections_unfolded = [ "Cell", "Transform" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TileMap" type="TileMap" parent="." index="1"]
+
+position = Vector2( -12, 16 )
+mode = 0
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+cell_clip_uv = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+format = 1
+tile_data = PoolIntArray( 131074, 1, 0, 131075, 3, 0, 131076, 3, 0, 131077, 3, 0, 131078, 3, 0, 131079, 3, 0, 131080, 5, 0, 196610, 1, 0, 196616, 5, 0, 262146, 1, 0, 262152, 3, 0, 262153, 3, 0, 393205, 24, 0, 393206, 24, 0, 327682, 1, 0, 458743, 24, 0, 393218, 1, 0, 393224, 1, 0, 393225, 24, 0, 393226, 24, 0, 524280, 24, 0, 458754, 6, 0, 458755, 3, 0, 458756, 3, 0, 458757, 3, 0, 458758, 3, 0, 458759, 24, 0, 458760, 24, 0, 458761, 24, 0, 524295, 24, 0 )
+_sections_unfolded = [ "Cell", "Transform" ]
+
+[node name="player" type="KinematicBody2D" parent="." index="2"]
+
+position = Vector2( 72, 72 )
+z_as_relative = false
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 2 )
+_sections_unfolded = [ "Z Index" ]
+
+[node name="Sprite" type="Sprite" parent="player" index="0"]
+
+position = Vector2( 0, 0.028451 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 64, 128, 16, 16 )
+_sections_unfolded = [ "Region", "Transform" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player/Sprite" index="0"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/walk = SubResource( 1 )
+blend_times = [  ]
+
+[node name="Camera2D" type="Camera2D" parent="player" index="1"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player" index="2"]
+
+position = Vector2( -2.62268e-07, 6 )
+rotation = 1.5708
+shape = SubResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Tileset" type="Sprite" parent="." index="3"]
+
+visible = false
+position = Vector2( 208, 88 )
+texture = ExtResource( 3 )
+
+

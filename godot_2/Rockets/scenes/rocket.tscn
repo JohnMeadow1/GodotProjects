@@ -1,0 +1,135 @@
+[gd_scene load_steps=8 format=1]
+
+[ext_resource path="res://scripts/rocket.gd" type="Script" id=1]
+[ext_resource path="res://sprites/rocket.png" type="Texture" id=2]
+[ext_resource path="res://sprites/fire.png" type="Texture" id=3]
+[ext_resource path="res://sprites/explosion1.png" type="Texture" id=4]
+
+[sub_resource type="ColorRamp" id=1]
+
+offsets = FloatArray( 0, 0.0233918, 0.526316, 1 )
+colors = ColorArray( 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0 )
+
+[sub_resource type="Animation" id=2]
+
+length = 0.8
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("warhead:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.4, 0.5, 0.6, 0.7 ), "transitions":FloatArray( 1, 1, 1, 1, 1 ), "update":1, "values":[ 0, 1, 2, 1, 0 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("fire:frame")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ), "transitions":FloatArray( 1, 1, 1, 1, 1, 1, 1, 1 ), "update":1, "values":[ 0, 1, 2, 1, 0, 1, 2, 1 ] }
+
+[sub_resource type="Animation" id=3]
+
+length = 0.34
+loop = false
+step = 0.02
+tracks/0/type = "value"
+tracks/0/path = NodePath("explosion:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = { "times":FloatArray( 0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22, 0.24 ), "transitions":FloatArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), "update":1, "values":[ 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ] }
+tracks/1/type = "value"
+tracks/1/path = NodePath("explosion:visibility/visible")
+tracks/1/interp = 1
+tracks/1/imported = false
+tracks/1/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ true ] }
+tracks/2/type = "value"
+tracks/2/path = NodePath("fire:visibility/visible")
+tracks/2/interp = 1
+tracks/2/imported = false
+tracks/2/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ false ] }
+tracks/3/type = "value"
+tracks/3/path = NodePath("warhead:visibility/visible")
+tracks/3/interp = 1
+tracks/3/imported = false
+tracks/3/keys = { "times":FloatArray( 0 ), "transitions":FloatArray( 1 ), "update":1, "values":[ false ] }
+
+[node name="Rocket" type="Node2D"]
+
+script/script = ExtResource( 1 )
+
+[node name="Node2D" type="Node2D" parent="."]
+
+__meta__ = { "_edit_lock_":true }
+
+[node name="Particles2D" type="Particles2D" parent="Node2D"]
+
+transform/pos = Vector2( -16, 0 )
+transform/scale = Vector2( 2, 2 )
+config/amount = 16
+config/lifetime = 0.3
+config/local_space = false
+params/direction = 0.0
+params/spread = 999.0
+params/linear_velocity = 4.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 1.0
+params/final_size = 4.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/linear_velocity = 0.2
+color/color_ramp = SubResource( 1 )
+
+[node name="warhead" type="Sprite" parent="Node2D"]
+
+texture = ExtResource( 2 )
+vframes = 3
+
+[node name="fire" type="Sprite" parent="Node2D"]
+
+transform/pos = Vector2( -24, 0 )
+texture = ExtResource( 3 )
+vframes = 3
+
+[node name="explosion" type="Sprite" parent="Node2D"]
+
+texture = ExtResource( 4 )
+vframes = 4
+hframes = 4
+frame = 14
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D"]
+
+playback/process_mode = 1
+playback/default_blend_time = 0.0
+root/root = NodePath("..")
+anims/Active = SubResource( 2 )
+anims/boom = SubResource( 3 )
+next/Active = ""
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "Active"
+
+[node name="Label" type="Label" parent="."]
+
+visibility/visible = false
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 6.0
+margin/top = -29.0
+margin/right = 46.0
+margin/bottom = -15.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+
