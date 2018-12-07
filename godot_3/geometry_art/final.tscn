@@ -1,0 +1,168 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://final.gd" type="Script" id=1]
+[ext_resource path="res://leszek1.png" type="Texture" id=2]
+[ext_resource path="res://digital-7 (mono).ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 52
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=2]
+
+size = 32
+use_mipmaps = false
+use_filter = false
+extra_spacing_top = 10
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Extra Spacing", "Font" ]
+
+[node name="final" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( 0, 260 )
+scale = Vector2( 2, 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="Sprite2" type="Sprite" parent="." index="1"]
+
+position = Vector2( 230, 460 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="Label" type="Label" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 537.0
+margin_top = 14.0
+margin_right = 662.0
+margin_bottom = 43.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = ","
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Size Flags", "custom_fonts" ]
+
+[node name="Label2" type="Label" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 58.0
+margin_top = 57.0
+margin_right = 586.0
+margin_bottom = 86.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 0.886932, 0.777344, 1 )
+text = "Geometria dla artystow"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
+
+[node name="Label5" type="Label" parent="." index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 58.0
+margin_top = 174.0
+margin_right = 586.0
+margin_bottom = 203.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 0.886932, 0.777344, 1 )
+text = "The End"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
+
+[node name="Label3" type="Label" parent="." index="5"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 18.0
+margin_top = 517.0
+margin_right = 546.0
+margin_bottom = 618.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.344925, 0.595377, 0.644531, 1 )
+text = "Leszek Nowak
+21-06-2018
+Krakow"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
+
+[node name="Label4" type="Label" parent="." index="6"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -178.0
+margin_top = 555.0
+margin_right = 350.0
+margin_bottom = 630.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 1, 0.0625, 1 )
+text = ","
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_colors" ]
+
+

@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=1]
+
+[ext_resource path="res://dissort.shd" type="Shader" id=1]
+[ext_resource path="res://continents.png" type="Texture" id=2]
+[ext_resource path="res://normal.png" type="Texture" id=3]
+[ext_resource path="res://athmosphere.png" type="Texture" id=4]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+shader/shader = ExtResource( 1 )
+shader/shading_mode = 0
+shader_param/continents = ExtResource( 2 )
+
+[node name="flat_planet" type="Control"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+
+[node name="planet" type="Sprite" parent="."]
+
+material/material = SubResource( 1 )
+transform/pos = Vector2( 150, 150 )
+transform/scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 140, 70, 30, 20 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="athmosphere" type="Sprite" parent="."]
+
+transform/pos = Vector2( 150, 150 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+

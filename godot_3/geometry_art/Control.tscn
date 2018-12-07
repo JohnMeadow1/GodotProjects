@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Control.gd" type="Script" id=1]
+
+[node name="Control" type="Control" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 110.0
+margin_top = 47.0
+margin_right = 150.0
+margin_bottom = 87.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 1 )
+rotary_min_angle = -135.0
+rotary_max_angle = 135.0
+radius = 300.0
+indicator_value = 0.0
+indicator_line = 0.75
+indicator_line_width = 6.0
+fill_post_line_color = Color( 0, 0, 0, 1 )
+base_post_line_color = Color( 1, 0, 0, 0.25 )
+fill_color = Color( 1, 1, 1, 1 )
+
+

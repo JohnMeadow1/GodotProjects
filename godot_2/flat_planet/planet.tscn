@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://dissort.shd" type="Shader" id=1]
+[ext_resource path="res://continents2.png" type="Texture" id=2]
+[ext_resource path="res://normal.png" type="Texture" id=3]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+shader/shader = ExtResource( 1 )
+shader/shading_mode = 0
+shader_param/continents = ExtResource( 2 )
+
+[node name="normalMap" type="Sprite"]
+
+material/material = SubResource( 1 )
+transform/scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 140, 70, 30, 20 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+
