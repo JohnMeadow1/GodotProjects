@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+export var anchor := false
+
+var pos := Vector2()
+var old_pos := Vector2()
+
+
+func set_pos(x : int, y : int) -> void:
+	pos = Vector2(x, y)
+	old_pos = pos
+	global_position = pos
+"
+
+[node name="Bit" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )

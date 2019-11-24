@@ -1,0 +1,175 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sunset_crusader.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+const CHAIN_BIT := preload(\"res://cape_bit.tscn\")
+const CHAIN_LINK := preload(\"res://cape_joint.tscn\")
+
+#const CHAIN_LINK_LENGTH := 10
+
+const GRAVITY    := 0.6
+const FRICTION   := 0.90
+const RESISTANCE := 0.98
+
+var bits  := []
+var anchor_bits  := []
+var links := []
+
+export var texture :Texture
+export var width_bits  := 4
+export var length_bits := 6
+export var link_distance := 20
+
+export(NodePath) var cape_attachment_1
+export(NodePath) var cape_attachment_2
+var attachments_max_distance = 0.0
+
+var force_direction := Vector2.DOWN
+
+func _ready() -> void:
+	attachments_max_distance = 1.5 * (get_node(cape_attachment_2).global_position -  get_node(cape_attachment_1).global_position).length()
+	if width_bits < 2:
+		width_bits = 2
+		
+	build_cape()
+	set_tex(texture)
+
+func build_cape():
+	for x in range (width_bits):
+		var local_x = lerp( get_node(cape_attachment_1).global_position.x, get_node(cape_attachment_2).global_position.x, float(x)/width_bits)
+		for y in range (length_bits):
+			add_bit(local_x, y)
+			if y > 0:
+				add_link(x, y)
+
+func add_bit( x:int, y:int ) -> void:
+	var bit := CHAIN_BIT.instance()
+
+	if y == 0:
+		bit.anchor = true
+#		var anchor_pos_y = y + sin (float(x+1)/(width_bits) * PI) * 10
+		bit.set_pos( x, 0 )
+		anchor_bits.append( bit )
+	else:
+		bit.set_pos( x, y * link_distance )
+
+	bits.append( bit )
+	add_child( bit )
+
+func add_link( x:int, y:int ) -> void:
+	var link := CHAIN_LINK.instance()
+	link.parent_bit = bits[ (length_bits) * x + (y-1) ]
+	link.child_bit  = bits[ (length_bits) * x + y ]
+	links.append(link)
+	add_child(link)
+
+func _process(delta) -> void:
+	force_direction = lerp(force_direction, get_parent().direction, 0.1)
+	update_anchors()
+	update_bits()
+	constrain_links()
+	render_frame()
+	
+func update_anchors() -> void:
+	var chain_start = get_node(cape_attachment_1).global_position
+	var chain_end = get_node(cape_attachment_2).global_position
+	var chain_mid = ( chain_start + chain_end ) * 0.5
+	var difference = clamp(attachments_max_distance - (chain_end - chain_start).length(), 0, attachments_max_distance )
+	chain_mid += difference * force_direction
+	
+	anchor_bits[0].pos = chain_start
+	anchor_bits[0].global_position = chain_start
+	anchor_bits[anchor_bits.size()-1].pos = chain_end
+	anchor_bits[anchor_bits.size()-1].global_position = chain_end
+		
+	for i in range( 1, anchor_bits.size() - 1 ):
+		var t = float(i) / ( anchor_bits.size() - 1 )
+		anchor_bits[i].pos = quadratic_bezier( chain_start, chain_mid, chain_end, t )
+		anchor_bits[i].global_position = anchor_bits[i].pos
+#		anchor_bits[i].global_position = lerp( anchor_bits[i].global_position, anchor_bits[i].pos, 0.20 )
+		
+func update_bits() -> void:
+	for i in range(bits.size()):
+		if !bits[i].anchor:
+			apply_movement(bits[i])
+
+		$Polygon2D.polygon[i] = bits[i].position
+
+func quadratic_bezier(p0: Vector2, p1: Vector2, p2: Vector2, t: float):
+	var q0 = p0.linear_interpolate(p1, t)
+	var q1 = p1.linear_interpolate(p2, t)
+	var r = q0.linear_interpolate(q1, t)
+	return r
+	
+func apply_movement(bit) -> void:
+	var velocity := calc_velocity(bit)
+	bit.old_pos = bit.pos
+	bit.pos += force_direction + velocity
+
+func constrain_links():
+	for link in links:
+		var vector := calc_link_vector(link)
+		var distance := link.child_bit.pos.distance_to(link.parent_bit.pos) as float
+		var difference := link_distance - distance
+		var percentage := difference / distance
+		vector *= percentage
+		link.child_bit.pos += vector
+
+func calc_link_vector(link) -> Vector2:
+	return link.child_bit.pos - link.parent_bit.pos
+	
+func calc_velocity(bit) -> Vector2:
+	return (bit.pos - bit.old_pos) * RESISTANCE * FRICTION
+	
+func apply_velocity(velocity : Vector2, delta : float) -> void:
+	for i in range(1, bits.size()):
+		var random_velocity = Vector2( velocity.x * rand_range(0.5,1.2), velocity.y * rand_range(0.5,1.2) )
+		bits[i].pos += (random_velocity) * delta / (length_bits - (i%length_bits)+1)
+
+func render_frame() -> void:
+	for link in links:
+		link.child_bit.global_position = link.child_bit.pos
+
+func set_tex(tex: Texture):
+	$Polygon2D.texture = tex
+	var vertex_array := PoolVector2Array()
+	var color_array := PoolColorArray()
+	var vertex_distance = tex.get_size() / Vector2(width_bits-1, length_bits-1)
+	for x in range (width_bits):
+		for y in range (length_bits):
+			vertex_array.append( Vector2(x,y) * vertex_distance )
+			var local_color = 1.1 - sin( float(x) / (width_bits-1) * PI )/2.0
+			color_array.append( Color(local_color, local_color, local_color) )
+	$Polygon2D.vertex_colors = color_array
+	$Polygon2D.polygon = vertex_array
+	$Polygon2D.uv = vertex_array
+	for i in range(bits.size()):
+		$Polygon2D.polygon[i] = bits[i].position
+
+
+	var quad = PoolIntArray()
+	quad.append_array([0,0,0])
+	for x in range (width_bits-1):
+		for y in range (length_bits-1):
+			quad[0] = y + x * length_bits
+			quad[1] = y + (x + 1) * length_bits
+			quad[2] = (y+1) + (x + 1) * length_bits
+			$Polygon2D.polygons.append(quad)
+			quad[0] = y + x * length_bits
+			quad[1] = (y+1) + (x + 1) * length_bits
+			quad[2] = (y+1) + (x) * length_bits
+			$Polygon2D.polygons.append(quad)
+
+func set_flip(left: bool):
+	for link in links:
+		link.flip_v = left
+"
+
+[node name="Cape" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+texture = ExtResource( 1 )

@@ -1,0 +1,107 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://cape.tscn" type="PackedScene" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
+[ext_resource path="res://sunset_crusader.png" type="Texture" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+var timer := 0.0
+var iterator :int = 0
+var previous_position := Vector2()
+var previous_mouse_position := Vector2()
+var direction := Vector2()
+
+var wind_direction := Vector2()
+var wind_direction_target := Vector2()
+var wind_strength := 250.0
+var wind_strength_target := 250.0
+
+
+func _ready():
+	randomize()
+	pass # Replace with function body.
+
+func _physics_process(delta):
+	timer += delta
+	iterator %= (randi()%100 +1)
+	if iterator == 0:
+		var new_direction = rand_range(-PI, PI)
+		wind_direction_target = Vector2(cos(new_direction),sin(new_direction))
+		wind_strength_target = rand_range( 100, 250 )
+	iterator += 1
+		
+	wind_direction = lerp(wind_direction, wind_direction_target, 0.1)
+	wind_strength = lerp(wind_strength, wind_strength_target, 0.1)
+	$Label.text = \"Force: \" +str(int(wind_strength))
+	direction = (previous_position - get_global_mouse_position())
+	direction = Vector2(0,1) * max(1 - direction.length()*0.05, 0) + direction.normalized() * min(direction.length()*0.05, 1)
+	$Sprite.rotation = lerp_angle($Sprite.rotation, Vector2.DOWN.angle_to(direction),0.2)
+	$Sprite.position = lerp( $Sprite.position, get_global_mouse_position(), 0.1 )
+#	direction = wind_direction
+	previous_position = $Sprite.position
+	previous_mouse_position =  get_global_mouse_position()
+	$Cape.apply_velocity(wind_direction * wind_strength, delta)
+	
+	update()
+
+func _draw():
+	draw_circle(Vector2(50,50), 25, Color.darkgray)
+	draw_circle_arc(Vector2(50,50), 25, Color.white)
+	draw_line(Vector2(50,50), Vector2(50,50) + wind_direction * wind_strength * 0.1, Color.yellow, 3)
+	
+func draw_circle(center, radius, color):
+	var nb_points = 32
+	var points_arc = PoolVector2Array()
+	points_arc.push_back(center)
+	var colors = PoolColorArray([color])
+
+	for i in range(nb_points + 1):
+		var angle_point = float(i)*PI*2 / nb_points
+		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
+	draw_polygon(points_arc, colors)
+
+func draw_circle_arc(center, radius, color):
+	var nb_points = 32
+	var points_arc = PoolVector2Array()
+
+	for i in range(nb_points + 1):
+		var angle_point = float(i)*PI*2 / nb_points
+		points_arc.push_back(center + Vector2(cos(angle_point), sin(angle_point)) * radius)
+
+	for index_point in range(nb_points):
+		draw_line(points_arc[index_point], points_arc[index_point + 1], color, 2 )
+		
+		
+"
+
+[node name="Node2D" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Cape" parent="." instance=ExtResource( 1 )]
+texture = ExtResource( 3 )
+width_bits = 5
+link_distance = 26
+cape_attachment_1 = NodePath("../Sprite/attach_point_1")
+cape_attachment_2 = NodePath("../Sprite/attach_point_2")
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+z_index = -1
+texture = ExtResource( 2 )
+
+[node name="attach_point_1" type="Node2D" parent="Sprite"]
+position = Vector2( -22.2236, 14.7831 )
+
+[node name="attach_point_2" type="Node2D" parent="Sprite"]
+position = Vector2( 21.2981, 14.8008 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 78.0
+margin_right = 56.0
+margin_bottom = 99.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
