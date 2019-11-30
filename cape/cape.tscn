@@ -28,9 +28,10 @@ export(NodePath) var cape_attachment_2
 var attachments_max_distance = 0.0
 
 var force_direction := Vector2.DOWN
+var parent_direction := Vector2.DOWN
 
 func _ready() -> void:
-	attachments_max_distance = 1.5 * (get_node(cape_attachment_2).global_position -  get_node(cape_attachment_1).global_position).length()
+	attachments_max_distance = 2.5 * (get_node(cape_attachment_2).position - get_node(cape_attachment_1).position).length()
 	if width_bits < 2:
 		width_bits = 2
 		
@@ -39,7 +40,7 @@ func _ready() -> void:
 
 func build_cape():
 	for x in range (width_bits):
-		var local_x = lerp( get_node(cape_attachment_1).global_position.x, get_node(cape_attachment_2).global_position.x, float(x)/width_bits)
+		var local_x = lerp( get_node(cape_attachment_1).position.x, get_node(cape_attachment_2).position.x, float(x)/width_bits)
 		for y in range (length_bits):
 			add_bit(local_x, y)
 			if y > 0:
@@ -67,15 +68,15 @@ func add_link( x:int, y:int ) -> void:
 	add_child(link)
 
 func _process(delta) -> void:
-	force_direction = lerp(force_direction, get_parent().direction, 0.1)
+	force_direction = lerp(force_direction, parent_direction * delta, 0.1)
 	update_anchors()
 	update_bits()
 	constrain_links()
 	render_frame()
 	
 func update_anchors() -> void:
-	var chain_start = get_node(cape_attachment_1).global_position
-	var chain_end = get_node(cape_attachment_2).global_position
+	var chain_start = get_node(cape_attachment_1).global_position 
+	var chain_end = get_node(cape_attachment_2).global_position 
 	var chain_mid = ( chain_start + chain_end ) * 0.5
 	var difference = clamp(attachments_max_distance - (chain_end - chain_start).length(), 0, attachments_max_distance )
 	chain_mid += difference * force_direction
