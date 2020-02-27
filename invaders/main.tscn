@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://invader.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player.tscn" type="PackedScene" id=2]
+
+[node name="main" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 49.5539, 479.432 )
+
+[node name="invaders" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="invader" parent="invaders" instance=ExtResource( 1 )]
+position = Vector2( 59.0765, 30.5085 )
+
+[node name="invader2" parent="invaders" instance=ExtResource( 1 )]
+position = Vector2( 74.0406, 30.5085 )
