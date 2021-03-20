@@ -1,0 +1,67 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[  ]
+_global_script_class_icons={
+
+}
+
+[application]
+
+config/name="Team Workshop 2021"
+run/main_scene="res://Main.tscn"
+config/icon="res://icon.png"
+
+[input]
+
+player_1_up={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_1_down={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_1_left={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_1_right={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_1_shoot={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_2_up={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_2_down={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_2_left={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_2_right={
+"deadzone": 0.5,
+"events": [  ]
+}
+player_2_shoot={
+"deadzone": 0.5,
+"events": [  ]
+}
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
