@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://maps/bird_1_white.png" type="Texture" id=1]
+
+[node name="Bird" type="Sprite"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+centered = false
+vframes = 8
+hframes = 3
+frame = 5
